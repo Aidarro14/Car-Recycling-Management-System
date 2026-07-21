@@ -1,0 +1,164 @@
+﻿@model CarRecyclingWeb.Models.CreateRequestViewModel
+
+@{
+    ViewData["Title"] = "Подать заявку";
+}
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Подать заявку на утилизацию автомобиля</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Информация об автомобиле</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label asp-for="CarBrand" class="form-label"></label>
+                            <input asp-for="CarBrand" class="form-control" />
+                            <span asp-validation-for="CarBrand" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CarModel" class="form-label"></label>
+                            <input asp-for="CarModel" class="form-control" />
+                            <span asp-validation-for="CarModel" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CarYear" class="form-label"></label>
+                            <input asp-for="CarYear" class="form-control" />
+                            <span asp-validation-for="CarYear" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CarVIN" class="form-label"></label>
+                            <input asp-for="CarVIN" class="form-control" />
+                            <span asp-validation-for="CarVIN" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CarLicensePlate" class="form-label"></label>
+                            <input asp-for="CarLicensePlate" class="form-control" />
+                            <span asp-validation-for="CarLicensePlate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="CarWeightKg" class="form-label"></label>
+                            <input asp-for="CarWeightKg" class="form-control" type="number" step="0.01" id="carWeight" /> <span asp-validation-for="CarWeightKg" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CarVehicleType" class="form-label"></label>
+                            <select asp-for="CarVehicleType" asp-items="Model.VehicleTypes" class="form-control" id="carVehicleType">
+                                <option value="">-- Выберите тип --</option>
+                            </select>
+                            <span asp-validation-for="CarVehicleType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Предварительная стоимость утилизации:</label>
+                            <p id="recyclingCost" class="form-control-plaintext fs-4 fw-bold text-success">0.00 руб.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Детали заявки</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label asp-for="RecyclingPointId" class="form-label"></label>
+                            @if (Model.RecyclingPoints != null && Model.RecyclingPoints.Any())
+                            {
+                                <select asp-for="RecyclingPointId" asp-items="Model.RecyclingPoints" class="form-control">
+                                    <option value="">-- Выберите пункт утилизации --</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <p class="text-danger">Нет доступных пунктов утилизации. Пожалуйста, обратитесь к администратору.</p>
+                                <input type="hidden" asp-for="RecyclingPointId" value="" />
+                            }
+                            <span asp-validation-for="RecyclingPointId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Condition" class="form-label"></label>
+                            <select asp-for="Condition" class="form-control">
+                                <option value="Рабочее">Рабочее</option>
+                                <option value="Нерабочее">Нерабочее</option>
+                                <option value="После ДТП">После ДТП</option>
+                                <option value="На запчасти">На запчасти</option>
+                                <option value="Другое">Другое</option>
+                            </select>
+                            <span asp-validation-for="Condition" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PreferredDisposalDate" class="form-label"></label>
+                            <input asp-for="PreferredDisposalDate" class="form-control" type="date" />
+                            <span asp-validation-for="PreferredDisposalDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg mt-3">Подать заявку</button>
+                    <a asp-action="MyRequests" class="btn btn-secondary mt-2">Мои заявки</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carWeightInput = document.getElementById('carWeight');
+            const carVehicleTypeSelect = document.getElementById('carVehicleType');
+            const recyclingCostDisplay = document.getElementById('recyclingCost');
+
+            // Функция для расчета и отображения стоимости
+            async function updateRecyclingCost() {
+                const weight = parseFloat(carWeightInput.value);
+                const vehicleType = carVehicleTypeSelect.value;
+
+                if (isNaN(weight) || weight <= 0 || !vehicleType) {
+                    recyclingCostDisplay.textContent = '0.00 руб.'; // Сброс, если данные некорректны
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/Requests/CalculateCostApi?weight=${weight}&vehicleType=${vehicleType}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    recyclingCostDisplay.textContent = `${data.cost} руб.`;
+                } catch (error) {
+                    console.error('Ошибка при получении стоимости утилизации:', error);
+                    recyclingCostDisplay.textContent = 'Ошибка расчета.'; // Сообщение об ошибке
+                }
+            }
+
+            // Добавляем слушателей событий для полей
+            carWeightInput.addEventListener('input', updateRecyclingCost);
+            carVehicleTypeSelect.addEventListener('change', updateRecyclingCost);
+
+            // Вызываем функцию при загрузке страницы, если поля уже заполнены (например, при ошибке валидации POST)
+            updateRecyclingCost();
+        });
+    </script>
+}

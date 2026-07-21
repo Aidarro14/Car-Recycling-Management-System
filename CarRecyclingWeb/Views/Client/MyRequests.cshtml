@@ -1,0 +1,170 @@
+﻿@model IEnumerable<CarRecyclingWeb.Models.Request>
+@using CarRecyclingWeb.Models
+
+@{
+    ViewData["Title"] = "Мои заявки";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4 text-center display-4 text-primary">
+        <i class="bi bi-file-earmark-text-fill me-3"></i> @ViewData["Title"]
+    </h1>
+    <p class="lead text-center mb-5 text-secondary">
+        Просматривайте актуальный статус и детали по вашим заявкам на утилизацию.
+    </p>
+
+    @* Добавьте этот блок для отображения сообщений из TempData *@
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+    }
+    @if (TempData["InfoMessage"] != null)
+    {
+        <div class="alert alert-info" role="alert">@TempData["InfoMessage"]</div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var request in Model)
+            {
+                <div class="col d-flex">
+                    <div class="card h-100 shadow-sm border-start border-primary border-4 rounded-3 w-100">
+                        <div class="card-body p-4">
+                            @* Информация о заявке и автомобиле, которая была выше *@
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title text-primary mb-0">Заявка № <span class="fw-bold">@request.RequestId</span></h5>
+                                @{
+                                    string statusBadgeClass = "bg-secondary"; // Дефолтный класс
+                                    switch (request.Status)
+                                    {
+                                        case RequestStatus.Accepted:
+                                            statusBadgeClass = "bg-info text-dark";
+                                            break;
+                                        case RequestStatus.InProgress:
+                                            statusBadgeClass = "bg-warning text-dark";
+                                            break;
+                                        case RequestStatus.OnRecycling:
+                                            statusBadgeClass = "bg-primary";
+                                            break;
+                                        case RequestStatus.Completed:
+                                            statusBadgeClass = "bg-success";
+                                            break;
+                                        case RequestStatus.AwaitingConfirmation:
+                                            statusBadgeClass = "bg-secondary";
+                                            break;
+                                        case RequestStatus.NeedsRevision:
+                                            statusBadgeClass = "bg-danger";
+                                            break;
+                                        case RequestStatus.AwaitingAdminApproval:
+                                            statusBadgeClass = "bg-info";
+                                            break;
+                                    }
+                                }
+                                <span class="badge fs-6 @statusBadgeClass">@request.Status.GetDisplayName()</span>
+                            </div>
+
+                            <p class="card-text text-muted mb-2"><small><i class="bi bi-calendar me-2"></i> Дата создания: @request.SubmissionDate.ToString("dd.MM.yyyy HH:mm")</small></p>
+
+                            @if (request.Car != null)
+                            {
+                                <h6 class="card-subtitle text-dark mb-2 mt-3"><i class="bi bi-car-front-fill me-2"></i> Информация об автомобиле:</h6>
+                                <p class="card-text text-dark mb-1">
+                                    <strong>@request.Car.Brand @request.Car.Model</strong>
+                                </p>
+                                <p class="card-text text-muted mb-1">
+                                    <small><i class="bi bi-hash me-2"></i> VIN: @request.Car.VIN</small>
+                                </p>
+                                <p class="card-text text-muted mb-1">
+                                    <small><i class="bi bi-speedometer2 me-2"></i> Год: @request.Car.Year</small>
+                                </p>
+                                @if (request.Car.WeightKg.HasValue)
+                                {
+                                    <p class="card-text text-muted mb-1">
+                                        <small><i class="bi bi-box-seam me-2"></i> Вес: @request.Car.WeightKg.Value.ToString("N0") кг</small>
+                                    </p>
+                                }
+                            }
+
+                            @if (request.RecyclingPoint != null)
+                            {
+                                <p class="card-text text-muted mb-3 mt-3">
+                                    <small><i class="bi bi-geo-alt me-2"></i> Пункт утилизации: <strong>@request.RecyclingPoint.Name</strong></small>
+                                </p>
+                            }
+
+                            <div class="mb-3">
+                                @if (request.Cost.HasValue)
+                                {
+                                    <p class="card-text text-success mb-1 fw-bold fs-4">
+                                        <i class="bi bi-cash-coin me-2"></i> @request.Cost.Value.ToString("N2") ₽
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="card-text text-warning mb-1 fw-bold fs-4">
+                                        <i class="bi bi-currency-rub me-2"></i> Не рассчитана
+                                    </p>
+                                }
+                            </div>
+
+                            @* **ИСПРАВЛЕННЫЙ БЛОК КНОПОК** *@
+                            <div class="mt-3 pt-3 border-top d-grid gap-2">
+                                <a asp-action="Details" asp-controller="Requests" asp-route-id="@request.RequestId" class="btn btn-outline-primary w-100">
+                                    <i class="bi bi-eye me-2"></i> Детали
+                                </a>
+
+                                @if (request.Status == RequestStatus.Completed)
+                                {
+                                    // Проверяем, есть ли отзыв для этой заявки
+                                    // Теперь Feedbacks должна быть доступна после добавления в модель Request и миграции
+                                    if (request.Feedbacks != null && request.Feedbacks.Any())
+                                    {
+                                        <button type="button" class="btn btn-secondary w-100" disabled>
+                                            <i class="bi bi-chat-text me-2"></i> Мой отзыв (оставлен)
+                                        </button>
+                                        @* Если вы создадите ViewFeedback метод, то можно так: *@
+                                        @* <a asp-action="ViewFeedback" asp-controller="Requests" asp-route-requestId="@request.RequestId" class="btn btn-secondary w-100">
+                                            <i class="bi bi-chat-text me-2"></i> Мой отзыв
+                                        </a> *@
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="LeaveFeedback" asp-controller="Requests" asp-route-requestId="@request.RequestId" class="btn btn-success w-100">
+                                            <i class="bi bi-chat-dots me-2"></i> Оставить отзыв
+                                        </a>
+                                    }
+                                }
+                            </div>
+                            @* **КОНЕЦ ИСПРАВЛЕННОГО БЛОКА КНОПОК** *@
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center py-5" role="alert">
+            <h4 class="alert-heading mb-3"><i class="bi bi-info-circle-fill me-2"></i> У вас пока нет активных заявок.</h4>
+            <p>Отправьте свою первую заявку на утилизацию автомобиля, и она сразу появится здесь!</p>
+            <hr>
+            <p class="mb-0">
+                <a asp-action="Create" asp-controller="Requests" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i> Создать новую заявку
+                </a>
+            </p>
+        </div>
+    }
+
+    <div class="text-center mt-5">
+        <a asp-action="Profile" asp-controller="Client" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-arrow-left me-2"></i> Вернуться в профиль
+        </a>
+    </div>
+</div>

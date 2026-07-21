@@ -1,0 +1,119 @@
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - УтилизацияАвто </title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="CarRecyclingWeb Logo" style="height: 40px; margin-right: 10px;">
+                    CarRecyclingWeb
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Points">Пункты утилизации</a>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Requests" asp-action="MyRequests">Мои заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Requests" asp-action="Create">Подать заявку</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                @{
+                                    string displayName = User.FindFirstValue("FullName") ?? User.Identity.Name;
+                                }
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Привет, @displayName!
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-controller="Client" asp-action="Profile">Профиль</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form asp-controller="Client" asp-action="LogoutPost" method="post">
+                                        <button type="submit" class="dropdown-item">Выйти</button>
+                                        @Html.AntiForgeryToken()
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Client" asp-action="Register">Регистрация</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Client" asp-action="Login">Войти</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-light py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <a class="text-muted mr-3" href="#">О компании</a>
+                <a class="text-muted mr-3" asp-area="" asp-controller="Home" asp-action="Privacy">Политика конфиденциальности</a>
+                <a class="text-muted" href="#">Правовая информация</a>
+            </div>
+            <div>
+                &copy; 2024 - CarRecyclingWeb
+            </div>
+            <div>
+                <select class="form-control form-control-sm">
+                    <option>Русский</option>
+                    <option>English</option>
+                </select>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Вручную привязываем событие клика для дропдауна в навигации
+            $('#navbarDropdown').on('click', function(e) {
+                e.preventDefault(); // Предотвращаем переход по href="#"
+                $(this).dropdown('toggle'); // Переключаем состояние дропдауна
+                console.log('Ручной клик по меню! ' + (new Date()).toLocaleTimeString()); // Для отладки
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
