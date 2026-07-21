@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `carrecyclingemp` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `carrecyclingemp`;
--- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: carrecyclingemp
 -- ------------------------------------------------------
--- Server version	8.0.41
+-- Server version	8.0.46
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -119,7 +117,7 @@ CREATE TABLE `employees` (
   `Role` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`EmployeeId`),
   UNIQUE KEY `IX_Employees_Email` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +126,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,'Администратор','admin@example.com','$2a$11$2qdmAH9s.aLxdubzpyCTDukyLg8AiHcQV/Wn59lhh7g6NQu4OnJqW','admin'),(2,'Работник','worker@example.com','$2a$11$lRhdy3gIcXYDycXW6akZbenGlIbolI5G/OetXJYeWtY9tCraAlbGq','worker'),(3,'Albert','valbern@mail.com','$2a$11$TBEeWz.e5311BUAWKeJnnerDxghAUo9yKd9Pu6PudP5klAiYyx60S','worker');
+INSERT INTO `employees` VALUES (1,'Администратор','admin@example.com','$2a$11$EpHUB6DGzskKO1dftJ2COODu2j0ifGV0Vp4AIauiQCUGFO3CSijmy','admin'),(7,'worker','worker@example.com','$2a$11$kmhvkcF7xjqLSrcoQSGMNO/wFjhztcTeKVYkS7tyH6XJJd0aRp4d.','worker');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +233,7 @@ CREATE TABLE `requests` (
 
 LOCK TABLES `requests` WRITE;
 /*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-INSERT INTO `requests` VALUES (2,1,1,2,2,'Завершена','2025-05-20 04:09:47.000000','2025-05-25 04:09:47.000000','Отличное','Машина разобрана на запчасти.','2025-05-30 04:14:38.000000',1500.00,1,'Утилизация завершена, акт подписан.',NULL),(3,2,2,2,NULL,'Принята','2025-05-30 04:42:15.752789','2025-06-06 00:00:00.000000','Рабочее','aaa',NULL,5000.00,0,NULL,NULL);
+INSERT INTO `requests` VALUES (2,1,1,2,NULL,'Завершена','2025-05-20 04:09:47.000000','2025-05-25 04:09:47.000000','Отличное','Машина разобрана на запчасти.','2025-05-30 04:14:38.000000',1500.00,1,'Утилизация завершена, акт подписан.',NULL),(3,2,2,2,NULL,'Принята','2025-05-30 04:42:15.752789','2025-06-06 00:00:00.000000','Рабочее','aaa',NULL,5000.00,0,NULL,NULL);
 /*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -248,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-30 13:49:42
+-- Dump completed on 2026-07-21 21:51:36
