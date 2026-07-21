@@ -399,7 +399,7 @@ dotnet run
 |------|-------|---------|
 | 👑 Администратор | `admin@example.com` | `admin123` |
 | 👨‍💼 Сотрудник | `worker@example.com` | `worker123` |
-| 👤 Клиент | `ivan@example.com` | `123456` |
+| 👤 Клиент | `ivan@example.com` | `Client123!` |
 
 ---
 
