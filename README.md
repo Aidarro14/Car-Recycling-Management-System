@@ -1,76 +1,165 @@
 # 🚗 Car Recycling Management System
 
-A full-stack information system for managing vehicle recycling requests.
-
-The project consists of a web application for clients and a desktop application for employees and administrators.
+**Car Recycling Management System** — это полноценная информационная система для управления процессом утилизации автомобилей. Проект состоит из **веб-приложения** для клиентов и **десктопного приложения** для сотрудников и администраторов.
 
 ---
 
-# Features
+## ✨ Основные возможности
 
-## Web Application
+### 🌐 Веб-приложение (для клиентов)
 
-- User Registration
-- User Authentication
-- Submit Recycling Requests
-- View Request Status
-- Profile Management
+- 🔐 Регистрация и авторизация пользователей
+- 🚘 Подача заявки на утилизацию автомобиля
+- 📋 Отслеживание статуса заявки
+- 👤 Управление личным профилем
+- 🗺️ Просмотр пунктов приёма на карте
+- ⭐ Оставление отзывов
 
-## Desktop Application
+### 🖥️ Десктоп-приложение (для сотрудников и администраторов)
 
-- Employee Login
-- Administrator Panel
-- Manage Recycling Requests
-- Manage Recycling Points
-- Manage Employees
-- View Client Information
-
----
-
-# Technologies
-
-- C#
-- .NET
-- ASP.NET Core MVC
-- Entity Framework Core
-- WinForms
-- MySQL
-- LINQ
-- Git
+- 🔑 Авторизация сотрудников и администраторов
+- 📑 Просмотр и обработка заявок
+- 🏢 Управление пунктами приёма
+- 👨‍💼 Управление сотрудниками
+- 👥 Просмотр информации о клиентах
 
 ---
 
-# Architecture
+## 🛠️ Используемые технологии
 
-```
-ASP.NET Core MVC
-        │
-Entity Framework Core
-        │
-      MySQL
-        │
- WinForms Desktop App
-```
+| Компонент | Технология |
+|-----------|------------|
+| Backend | ASP.NET Core MVC |
+| Desktop | Windows Forms (WinForms) |
+| ORM | Entity Framework Core |
+| Database | MySQL |
+| Language | C# (.NET) |
+| Version Control | Git |
 
 ---
 
-# Project Structure
+## 📂 Структура проекта
 
-```
-Car-Recycling-Management-System
+```text
+Car-Recycling-Management-System/
 │
-├── CarRecyclingWeb
+├── CarRecyclingWeb/                 # Веб-приложение (ASP.NET Core MVC)
+│   ├── Controllers/                 # Контроллеры
+│   ├── Models/                      # Модели данных
+│   ├── Views/                       # Razor-представления
+│   └── wwwroot/                     # CSS, JS, изображения
 │
-├── CarRecyclingApp
+├── CarRecyclingApp/                 # Десктопное приложение (WinForms)
+│   ├── Forms/                       # Формы приложения
+│   ├── Models/                      # Модели данных
+│   └── Services/                    # Сервисы
 │
-└── Database
+└── database/
+    └── Dump20250530.sql             # Дамп базы данных MySQL
 ```
 
 ---
 
-# Future Improvements
+## 🚀 Запуск проекта
 
-- JWT Authentication
-- Docker
-- Unit Testing
-- Logging
+### 1️⃣ Клонирование репозитория
+
+```bash
+git clone https://github.com/Aidarro14/Car-Recycling-Management-System.git
+cd Car-Recycling-Management-System
+```
+
+---
+
+### 2️⃣ Настройка базы данных
+
+1. Установите **MySQL Server**.
+2. Создайте базу данных.
+3. Выполните SQL-скрипт:
+
+```text
+database/Dump20250530.sql
+```
+
+4. Настройте строку подключения в файле:
+
+```text
+CarRecyclingWeb/appsettings.json
+```
+
+При необходимости аналогично измените строку подключения в десктопном приложении.
+
+---
+
+### 3️⃣ Запуск веб-приложения
+
+```bash
+cd CarRecyclingWeb
+dotnet restore
+dotnet run
+```
+
+После запуска откройте браузер и перейдите по адресу:
+
+```
+https://localhost:5001
+```
+
+---
+
+### 4️⃣ Запуск десктопного приложения
+
+```bash
+cd CarRecyclingApp
+dotnet restore
+dotnet run
+```
+
+или откройте файл решения (`.sln`) в **Visual Studio** и нажмите **Start**.
+
+---
+
+## 👤 Тестовые пользователи
+
+| Роль | Email | Пароль |
+|------|-------|---------|
+| 👑 Администратор | `admin@example.com` | `admin123` |
+| 👨‍💼 Сотрудник | `worker@example.com` | `worker123` |
+| 👤 Клиент | `ivan@example.com` | `123456` |
+
+---
+
+## 📸 Скриншоты
+
+> Здесь можно добавить изображения интерфейса веб-приложения и десктопного приложения.
+
+```
+docs/screenshots/web-home.png
+docs/screenshots/web-profile.png
+docs/screenshots/desktop-main.png
+```
+
+---
+
+## 📌 Возможности для дальнейшего развития
+
+- 📱 Адаптивная мобильная версия
+- 🔔 Email-уведомления
+- 📊 Аналитика и статистика
+- 📍 Интерактивная карта с геолокацией
+- 📄 Экспорт отчётов в PDF и Excel
+- ☁️ Развертывание в облаке
+
+---
+
+## 👨‍💻 Автор
+
+**Айдар**
+
+GitHub: **https://github.com/Aidarro14**
+
+---
+
+## 📄 Лицензия
+
+Проект создан в образовательных целях как дипломная работа.
