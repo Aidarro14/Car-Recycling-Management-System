@@ -1,0 +1,52 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.address-item {
+    cursor: pointer; /* Делает курсор в виде указателя */
+    transition: background-color 0.2s ease; /* Плавное изменение фона при наведении/активности */
+    padding: 15px; /* Увеличивает кликабельную область */
+    margin-bottom: 15px; /* Добавляет отступ между элементами списка */
+    /* Эти стили нужны, если вы хотите сделать элемент более "выступающим" или управлять его слоями,
+       но для вашей задачи, вероятно, не критичны, но не помешают */
+    /* position: relative; */
+    /* z-index: 1; */
+}
+
+    .address-item:hover {
+        background-color: #e9ecef; /* Светло-серый фон при наведении */
+    }
+
+    .address-item.active {
+        background-color: #007bff; /* Синий фон для активного элемента (как primary в Bootstrap) */
+        color: white; /* Белый текст для активного элемента */
+        border-color: #007bff; /* Синяя рамка для активного элемента */
+    }
+
+    /* ЭТО ОЧЕНЬ ВАЖНО для решения проблемы с выделением текста вместо клика */
+    /* Это свойство заставляет события мыши "проходить" сквозь эти элементы к родительскому .address-item */
+    .address-item i,
+    .address-item strong,
+    .address-item br,
+    .address-item span,
+    .address-item p {
+        pointer-events: none;
+    }

@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Утилизация автомобилей - CarRecyclingWeb";
+}
+
+<section class="jumbotron text-center bg-primary text-white py-5">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold mb-4">Утилизация автомобилей просто и удобно</h1>
+        <p class="lead mb-4">Подайте заявку онлайн, выберите ближайший пункт и получите компенсацию за сдачу авто.</p>
+        <a asp-controller="Requests" asp-action="Create" class="btn btn-warning btn-lg">Подать заявку</a>
+        <p class="mt-3">Уже зарегистрированы? <a asp-controller="Client" asp-action="Login" class="text-white font-weight-bold">Войти</a></p>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-5">Как это работает?</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="text-center p-4 border rounded shadow-sm h-100">
+                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                <h5>1. Зарегистрируйтесь / войдите</h5>
+                <p>Быстрая регистрация или простой вход в ваш аккаунт.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="text-center p-4 border rounded shadow-sm h-100">
+                <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                <h5>2. Добавьте информацию об автомобиле</h5>
+                <p>Укажите данные о вашем автомобиле для оценки.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="text-center p-4 border rounded shadow-sm h-100">
+                <i class="fas fa-map-marker-alt fa-3x text-primary mb-3"></i>
+                <h5>3. Выберите пункт утилизации</h5>
+                <p>Найдите ближайший к вам пункт приема на карте.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="text-center p-4 border rounded shadow-sm h-100">
+                <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
+                <h5>4. Отправьте заявку</h5>
+                <p>Подтвердите и отправьте вашу заявку на утилизацию.</p>
+            </div>
+        </div>
+        <div class="col-12 mt-4 text-center">
+            <div class="text-center p-4 border rounded shadow-sm h-100">
+                <i class="fas fa-sync-alt fa-3x text-primary mb-3"></i>
+                <h5>5. Отслеживайте статус</h5>
+                <p>Получайте уведомления о ходе выполнения вашей заявки.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Наши пункты утилизации в Казани</h2>
+        <div class="row">
+            <div class="col-md-7 mb-4">
+                <div class="embed-responsive embed-responsive-16by9 border rounded shadow-sm">
+                    <iframe id="mapFrame" class="embed-responsive-item"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2666.8086642069125!2d49.10518079129819!3d55.80174864263548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead164743e33f%3A0xaea83a664c11e1cb!2z0YPQuy4g0JrRgNC10LzQu9C10LLRgdC60LDRjywgMTUvMjUsINCa0LDQt9Cw0L3RjCwg0KDQtdGB0L8uINCi0LDRgtCw0YDRgdGC0LDQvSwg0KDQvtGB0YHQuNGPLCA0MjAxMTE!5e0!3m2!1sru!2sde!4v1748089331259!5m2!1sru!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" title="Карта пункта утилизации"> </iframe>
+                </div>
+            </div>
+            <div class="col-md-5 mb-4">
+                <h5>Наши адреса:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item address-item" data-map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2666.8086642069125!2d49.10518079129819!3d55.80174864263548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead164743e33f%3A0xaea83a664c11e1cb!2z0YPQuy4g0JrRgNC10LzQu9C10LLRgdC60LDRjywgMTUvMjUsINCa0LDQt9Cw0L3RjCwg0KDQtdGB0L8uINCi0LDRgtCw0YDRgdGC0LDQvSwg0KDQvtGB0YHQuNGPLCA0MjAxMTE!5e0!3m2!1sru!2sde!4v1748089331259!5m2!1sru!2sde">
+                        <i class="fas fa-industry mr-2 text-info"></i>
+                        <strong>ЭкоТех Казань</strong><br />
+                        <i class="fas fa-map-marker-alt mr-2 text-secondary"></i> г. Казань, ул. Кремлёвская, 15<br />
+                        <i class="fas fa-phone mr-2 text-secondary"></i> +7 843 555-1234
+                    </li>
+                    <li class="list-group-item address-item mt-3" data-map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d666.3998445927026!2d49.11424519668659!3d55.81940246262203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead527a5403af%3A0x93885c8143dcbdbd!2z0YPQuy4g0KfQuNGB0YLQvtC_0L7Qu9GM0YHQutCw0Y8sIDIxLCDQmtCw0LfQsNC90YwsINCg0LXRgdC_LiDQotCw0YLQsNGA0YHRgtCw0L0sINCg0L7RgdGB0LjRjywgNDIwMTI0!5e0!3m2!1sru!2sde!4v1748089372433!5m2!1sru!2sde">
+                        <i class="fas fa-industry mr-2 text-info"></i>
+                        <strong>ВторРесурс Казань</strong><br />
+                        <i class="fas fa-map-marker-alt mr-2 text-secondary"></i> г. Казань, ул. Чистопольская, 21<br />
+                        <i class="fas fa-phone mr-2 text-secondary"></i> +7 843 777-4321
+                    </li>
+                </ul>
+                <p class="mt-3 text-center">
+                    <a asp-controller="Home" asp-action="Points" class="btn btn-outline-secondary">Посмотреть все пункты на отдельной странице</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-5">Что говорят наши клиенты?</h2>
+    <div class="row">
+        @if (ViewBag.Reviews != null)
+        {
+            @foreach (var review in ViewBag.Reviews)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">@review.Name</h5>
+                                <div class="text-warning">
+                                    @for (int i = 0; i < review.Rating; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
+                                    @for (int i = 0; i < (5 - review.Rating); i++)
+                                    {
+                                        <i class="far fa-star"></i>
+                                    }
+                                </div>
+                            </div>
+                            <p class="card-text text-muted">@review.Text</p>
+                            <small class="text-muted">@review.Date.ToString("dd.MM.yyyy")</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center text-muted">Отзывов пока нет.</div>
+        }
+    </div>
+</section>
+
+<section class="bg-primary text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Нужна помощь? Свяжитесь с нами!</h2>
+        <p class="lead">Мы готовы ответить на все ваши вопросы и помочь с процессом утилизации.</p>
+        <p class="mb-2"><i class="fas fa-phone-alt mr-2"></i> +7 (XXX) XXX-XX-XX</p>
+        <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@carrecycling.com</p>
+        <p class="mb-4">
+            <a href="https://t.me/yourtelegram" class="text-white mr-3"><i class="fab fa-telegram fa-2x"></i></a>
+            <a href="https://wa.me/yourwhatsappnumber" class="text-white"><i class="fab fa-whatsapp fa-2x"></i></a>
+        </p>
+        <a href="#" class="btn btn-light btn-lg">Задать вопрос</a>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            
+            console.log('Скрипт карты: DOM готов.');
+            $('.address-item').first().addClass('active');
+
+            $('.address-item').click(function() {
+                
+                console.log('Клик по .address-item!');
+                $('.address-item').removeClass('active');
+                $(this).addClass('active');
+
+                var mapSrc = $(this).data('map-src');
+                console.log('Получен URL из data-map-src:', mapSrc);
+                $('#mapFrame').attr('src', mapSrc);
+                console.log('Атрибут src iframe должен был быть изменен на:', mapSrc);
+            });
+        });
+    </script>
+}

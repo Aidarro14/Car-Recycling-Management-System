@@ -1,0 +1,89 @@
+﻿@model CarRecyclingWeb.Models.Request
+@{
+    ViewData["Title"] = "Детали заявки #" + Model.RequestId;
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <h1 class="card-title text-center mb-4">Детали заявки #@Model.RequestId</h1>
+                <hr />
+
+                <dl class="row">
+                    <dt class="col-sm-4">ID Заявки:</dt>
+                    <dd class="col-sm-8">@Model.RequestId</dd>
+
+                    <dt class="col-sm-4">Клиент:</dt>
+                    <dd class="col-sm-8">@(Model.Client?.FirstName + " " + Model.Client?.LastName ?? "Неизвестен")</dd>
+
+                    <dt class="col-sm-4">Марка автомобиля:</dt>
+                    <dd class="col-sm-8">@(Model.Car?.Brand ?? "Не указана")</dd>
+
+                    <dt class="col-sm-4">Модель автомобиля:</dt>
+                    <dd class="col-sm-8">@(Model.Car?.Model ?? "Не указана")</dd>
+
+                    <dt class="col-sm-4">Год выпуска:</dt>
+                    <dd class="col-sm-8">@(Model.Car?.Year.ToString() ?? "Не указан")</dd>
+
+                    <dt class="col-sm-4">VIN-номер:</dt>
+                    <dd class="col-sm-8">@(Model.Car?.VIN ?? "Не указан")</dd>
+
+                    <dt class="col-sm-4">Госномер:</dt>
+                    <dd class="col-sm-8">@(Model.Car?.LicensePlate ?? "Не указан")</dd>
+
+                    <dt class="col-sm-4">Пункт утилизации:</dt>
+                    <dd class="col-sm-8">@(Model.RecyclingPoint?.Name ?? "Неизвестен") - @(Model.RecyclingPoint?.Address ?? "")</dd>
+
+                    <dt class="col-sm-4">Статус:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge @(Model.Status.ToString() == "Принята" ? "bg-info" :
+                                        Model.Status.ToString().Contains("обработке") ? "bg-warning" :
+                                        Model.Status.ToString().Contains("утилизации") ? "bg-primary" :
+                                        Model.Status.ToString() == "Завершена" ? "bg-success" : "bg-secondary")">
+                            @Model.Status.ToString().Replace("_", " ")
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4">Дата подачи:</dt>
+                    <dd class="col-sm-8">@Model.SubmissionDate.ToString("dd.MM.yyyy HH:mm")</dd>
+
+                    <dt class="col-sm-4">Дата завершения:</dt>
+                    <dd class="col-sm-8">@(Model.CompletionDate?.ToString("dd.MM.yyyy HH:mm") ?? "Не завершена")</dd>
+
+                    <dt class="col-sm-4">Предварительная стоимость:</dt>
+                    <dd class="col-sm-8">@(Model.Cost?.ToString("C") ?? "Ожидается оценка")</dd>
+
+                    <dt class="col-sm-4">Подтверждено админом:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.AdminConfirmed)
+                        {
+                            <span class="badge bg-success">Да</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Нет</span>
+                        }
+                    </dd>
+
+                    @if (!string.IsNullOrEmpty(Model.WorkerComment))
+                    {
+                        <dt class="col-sm-4">Комментарий сотрудника:</dt>
+                        <dd class="col-sm-8">@Model.WorkerComment</dd>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.AdminComment))
+                    {
+                        <dt class="col-sm-4">Комментарий администратора:</dt>
+                        <dd class="col-sm-8">@Model.AdminComment</dd>
+                    }
+                </dl>
+
+                <div class="text-center mt-4">
+                    <a asp-action="MyRequests" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Назад к списку заявок
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

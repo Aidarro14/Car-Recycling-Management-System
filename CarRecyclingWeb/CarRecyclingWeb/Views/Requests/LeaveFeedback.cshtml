@@ -1,0 +1,65 @@
+﻿@model CarRecyclingWeb.Models.Feedback
+@using CarRecyclingWeb.Models
+
+@{
+    ViewData["Title"] = "Оставить отзыв";
+}
+
+<form method="post" asp-action="LeaveFeedback">
+    @Html.AntiForgeryToken()
+
+    <div class="container py-5">
+        <h1 class="mb-4 text-center display-4 text-primary">
+            <i class="bi bi-chat-dots-fill me-3"></i> @ViewData["Title"]
+        </h1>
+        <p class="lead text-center mb-5 text-secondary">
+            Поделитесь своим мнением о завершенной заявке: **@ViewBag.RequestDetails**
+        </p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm p-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <input type="hidden" asp-for="RequestId" />
+                    <input type="hidden" asp-for="ClientId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Rating" class="form-label"></label>
+                        <select asp-for="Rating" class="form-select">
+                            <option value="">Выберите оценку</option>
+                            <option value="1">1 звезда - Плохо</option>
+                            <option value="2">2 звезды - Неудовлетворительно</option>
+                            <option value="3">3 звезды - Удовлетворительно</option>
+                            <option value="4">4 звезды - Хорошо</option>
+                            <option value="5">5 звезд - Отлично</option>
+                        </select>
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Comment" class="form-label"></label>
+                        <textarea asp-for="Comment" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-send me-2"></i> Отправить отзыв
+                        </button>
+                        <a asp-action="MyRequests" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i> Отмена
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+    

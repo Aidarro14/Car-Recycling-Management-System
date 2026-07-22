@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Вход</h2>
+
+                    @model CarRecyclingWeb.Controllers.ClientLoginViewModel
+                    @{
+                        ViewData["Title"] = "Вход";
+                        var returnUrl = ViewData["ReturnUrl"] as string;
+                    }
+
+                    <form asp-controller="Client" asp-action="Login" method="post">
+                        <input type="hidden" asp-for="ReturnUrl" value="@returnUrl" /> @* *@
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Войти</button>
+                    </form>
+                    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
